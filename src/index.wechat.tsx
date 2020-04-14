@@ -11,10 +11,7 @@ const WaterfallPlus = (props) => {
   // 页面显示区域卡尺
   function usePageCaliper() {
     const { windowHeight } = getSystemInfoSync();
-    const [caliper, setCaliper] = useState([
-      0 - PAGE_DISTANCE,
-      windowHeight + PAGE_DISTANCE,
-    ]); // 显示几个
+    const [caliper, setCaliper] = useState([0 - PAGE_DISTANCE, windowHeight + PAGE_DISTANCE]); // 显示几个
     return [caliper, setCaliper];
   }
   const [pageCaliper, setPageCaliper] = usePageCaliper();
@@ -74,10 +71,7 @@ const WaterfallPlus = (props) => {
     const scrollTopPx = scrollTop; // 单位 PX
     const waterfallScrollTop = Math.max(scrollTopPx - scrollOffest, 0);
     // 得到页面展现区间值
-    setPageCaliper([
-      waterfallScrollTop - PAGE_DISTANCE,
-      waterfallScrollTop + windowHeight + PAGE_DISTANCE,
-    ]);
+    setPageCaliper([waterfallScrollTop - PAGE_DISTANCE, waterfallScrollTop + windowHeight + PAGE_DISTANCE]);
   });
 
   const { dataGroups, topOffsetGroup, bottomOffsetGroup } = getDataGroups();
@@ -87,30 +81,23 @@ const WaterfallPlus = (props) => {
       {dataGroups.map((dataGroup, g) => {
         return (
           <View key={g} className={styles.column}>
-            <View
-              style={{ height: topOffsetGroup[g] }}
-              className={styles.placeholder}
-            />
+            <View style={{ height: topOffsetGroup[g] }} className={styles.placeholder} />
             {dataGroup.map((item, i) => {
               if (item._visible == false) return null;
               return (
                 <View
                   key={`g_${g}_${i}`}
-                  className="waterfall-item"
+                  className='waterfall-item'
                   style={{ height: item.height }}
                   data-group={g}
                   data-index={i}
                   data-s={item._startThreshold}
-                  data-e={item._endThreshold}
-                >
+                  data-e={item._endThreshold}>
                   {renderItem(item, `g_${g}_${i}`)}
                 </View>
               );
             })}
-            <View
-              style={{ height: bottomOffsetGroup[g] }}
-              className={styles.placeholder}
-            />
+            <View style={{ height: bottomOffsetGroup[g] }} className={styles.placeholder} />
           </View>
         );
       })}
