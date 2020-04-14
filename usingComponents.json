@@ -1,0 +1,7 @@
+{
+  "usingComponents": [
+    "view",
+    "text",
+    "image"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noImplicitUseStrict": true,
+    "noImplicitAny": true,
+    "moduleResolution": "node",
+    "jsx": "preserve",
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "declaration": true,
+    "alwaysStrict": false,
+    "lib": ["ES2015", "DOM"],
+    "baseUrl": "./",
+    "outDir": "lib",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["demos/**/*", "typings/**/*"],
+  "exclude": ["__tests__/**/*", "node_modules/**/*", "lib", "es"]
+}
