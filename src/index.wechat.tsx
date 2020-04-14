@@ -1,20 +1,22 @@
 import React, { useState } from 'react';
-import { View, getSystemInfoSync, usePageScroll } from 'remax/wechat';
+import { View, getSystemInfoSync, usePageEvent } from 'remax/wechat';
 
 import propTypes from 'prop-types';
-import styles from './index.less';
+import styles from './index.m.less';
 import transformRpx from './transformRpx';
 
 const PAGE_DISTANCE = 667;
 
+function usePageCaliper() {
+  const { windowHeight } = getSystemInfoSync();
+  const [caliper, setCaliper] = useState([0 - PAGE_DISTANCE, windowHeight + PAGE_DISTANCE]); // 显示几个
+  return [caliper, setCaliper];
+}
+
 const WaterfallPlus = (props) => {
-  // 页面显示区域卡尺
-  function usePageCaliper() {
-    const { windowHeight } = getSystemInfoSync();
-    const [caliper, setCaliper] = useState([0 - PAGE_DISTANCE, windowHeight + PAGE_DISTANCE]); // 显示几个
-    return [caliper, setCaliper];
-  }
   const [pageCaliper, setPageCaliper] = usePageCaliper();
+
+  // 页面显示区域卡尺
 
   function getDataGroups() {
     const { dataSource = [], columns = 2 } = props;
@@ -36,7 +38,7 @@ const WaterfallPlus = (props) => {
 
       const dataGroup = dataGroups[targetGroupIndex];
 
-      if (Number.isInteger(item.height)) {
+      if (typeof item.height === 'number') {
         heightGroups[targetGroupIndex] += item.height;
         // 上一个元素的下标值
         const prevItemEndThreshold = dataGroup[dataGroup.length - 1]
@@ -58,7 +60,7 @@ const WaterfallPlus = (props) => {
         }
         dataGroup.push(item);
       } else {
-        console.warn('waterfall 组件接受的数据, 必须含 height 字段!');
+        console.warn('waterfall 组件接受的数据, 必须含 height 字段!', item);
       }
     });
     return { dataGroups, topOffsetGroup, bottomOffsetGroup };
@@ -66,7 +68,7 @@ const WaterfallPlus = (props) => {
 
   const { renderItem, scrollOffest } = props;
   const { windowHeight } = getSystemInfoSync(); // 页面高度
-  usePageScroll((res) => {
+  usePageEvent('onPageScroll', (res) => {
     const { scrollTop } = res;
     const scrollTopPx = scrollTop; // 单位 PX
     const waterfallScrollTop = Math.max(scrollTopPx - scrollOffest, 0);

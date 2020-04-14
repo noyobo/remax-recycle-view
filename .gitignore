@@ -1,5 +1,6 @@
 .DS_Store
 node_modules/
+.idea/
 
 dist/
 # 构建后的文件目录 发布到 npm
