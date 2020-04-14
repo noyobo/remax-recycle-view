@@ -4,6 +4,7 @@ node_modules/
 dist/
 # 构建后的文件目录 发布到 npm
 lib/
+es/
 # 微信小程序预览目录
 wechat/ 
 # 字节跳动小程序预览目录
