@@ -1,6 +1,6 @@
 {
   "name": "@wpd/waterfall",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "WFF 组件模板",
   "main": "lib/",
   "module": "es/",
