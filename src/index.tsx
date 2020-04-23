@@ -4,19 +4,15 @@ import propTypes from "prop-types";
 import styles from './index.m.less'
 
 export default function WaterfallPlus (props) {
-    const { renderItem, scrollOffest } = props;
+    const { renderItem } = props;
 
     function getDataGroups() {
         const { dataSource = [], columns = 2 } = props;
         const heightGroups: number[] = [];
         const dataGroups: Array<any[]> = [];
-        const topOffsetGroup: number[] = [];
-        const bottomOffsetGroup: number[] = [];
 
         for (let index = 0; index < columns; index++) {
             heightGroups.push(0);
-            topOffsetGroup.push(0);
-            bottomOffsetGroup.push(0);
             dataGroups.push([]);
         }
 
@@ -39,16 +35,15 @@ export default function WaterfallPlus (props) {
                 console.warn('waterfall 组件接受的数据, 必须含 height 字段!', item);
             }
         });
-        return { dataGroups, topOffsetGroup, bottomOffsetGroup };
+        return { dataGroups };
     }
-    const { dataGroups, topOffsetGroup, bottomOffsetGroup } = getDataGroups();
+    const { dataGroups } = getDataGroups();
 
     return (
         <div className={styles.waterfall} style={props.style}>
             {dataGroups.map((dataGroup, g) => {
                 return (
                     <div key={g} className={styles.column}>
-                        <div style={{ height: topOffsetGroup[g] }} className={styles.placeholder} />
                         {dataGroup.map((item, i) => {
                             if (item._visible == false) return null;
                             return (
@@ -64,7 +59,6 @@ export default function WaterfallPlus (props) {
                                 </div>
                             );
                         })}
-                        <div style={{ height: bottomOffsetGroup[g] }} className={styles.placeholder} />
                     </div>
                 );
             })}
@@ -76,13 +70,13 @@ WaterfallPlus.propTypes = {
     renderItem: propTypes.func, // 渲染子元素
     columns: propTypes.number, // 共有几列
     dataSource: propTypes.array, // 数据源
-    scrollOffest: propTypes.number, // 页面滚动偏移量
+    // scrollOffest: propTypes.number, // 页面滚动偏移量
     style: propTypes.object, // 根节点样式
 };
 
 WaterfallPlus.defaultProps = {
     renderItem: () => {},
     columns: 2,
-    scrollOffest: 0,
+    // scrollOffest: 0,
     dataSource: [],
 };
